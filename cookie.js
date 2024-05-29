@@ -75,15 +75,14 @@ function parse (str, opt) {
     }
 
     const key = str.substring(pos, eqIdx++).trim()
-    if (result[key] === undefined) {
-      const val = str.charCodeAt(eqIdx) === 0x22
-        ? str.substring(eqIdx + 1, terminatorPos - 1).trim()
-        : str.substring(eqIdx, terminatorPos).trim()
 
-      result[key] = !(dec === decodeURIComponent && val.indexOf('%') === -1)
-        ? tryDecode(val, dec)
-        : val
-    }
+    const val = str.charCodeAt(eqIdx) === 0x22
+      ? str.substring(eqIdx + 1, terminatorPos - 1).trim()
+      : str.substring(eqIdx, terminatorPos).trim()
+
+    result[key] = !(dec === decodeURIComponent && val.indexOf('%') === -1)
+      ? tryDecode(val, dec)
+      : val
 
     pos = terminatorPos + 1
   }
